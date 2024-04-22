@@ -1,25 +1,34 @@
-.custom-btn-input{
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    margin-right: 10px;
+.custom-btn-input {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  margin-right: 10px;
 
-     button{
-        background-color: transparent;
-        border: none;
-        outline: none;
-        margin:2px ;
-     }
+  button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin: 2px;
+  }
 }
 
-.custom-input-fill{
-    padding-right: 80px;
+.custom-input-fill {
+  padding-right: 80px;
 }
-.custom-input-fillCc{
+.custom-input-fillCc {
+  padding-right: 10px;
+}
+.cc-input-fill, .bcc-input-fill{
     padding-right: 50px;
 }
-
-.hidden{
-    display: none;
+.cc-input-full, .bcc-input-full{
+    padding-right: 10px;
 }
+.show {
+  display: block;
+}
+.hidden {
+  display: none;
+}
+

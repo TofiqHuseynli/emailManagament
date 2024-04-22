@@ -20,19 +20,6 @@ export const TableCustom = ({ state, setState, path, loadData, VIEW, onDelete })
   const toast = useToast();
 
   const columns = [
-    // {
-    //   name: Lang.get("ID"),
-    //   center: false,
-    //   render: (data) => (
-    //     <Link
-    //       className="text-primary-alternative"
-    //       to={`${path}/edit/${data?.id}/view`}
-    //     >
-    //       <i className="feather feather-file-text mr-1" />
-    //       {data?.offer_number || Lang.get("Number")}
-    //     </Link>
-    //   ),
-    // },
     {
       name: Lang.get("From"),
       center: false,

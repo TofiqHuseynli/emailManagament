@@ -8,8 +8,8 @@ import {
   Textarea,
   Auth,
 } from "fogito-core-ui";
-import { Spinner } from "@components";
-import { useForm } from "react-hook-form";
+import { Spinner, WYSIWYGEditor } from "@components";
+import {useForm, Controller } from "react-hook-form";
 import {
   coreTimezonesList,
   currencyminList,
@@ -28,7 +28,6 @@ export const Add = ({ onClose, reload }) => {
   const [state, setState] = React.useReducer(
     (prevState, newState) => ({ ...prevState, ...newState }),
     {
-      
       loading: false,
       defaultVat: 0,
       currency_list: [],
@@ -80,9 +79,9 @@ export const Add = ({ onClose, reload }) => {
     currency_id: null,
     timezone_id: Auth.get("timezone")
       ? {
-        label: Auth.get("timezone")?.title,
-        value: Auth.get("timezone")?.id,
-      }
+          label: Auth.get("timezone")?.title,
+          value: Auth.get("timezone")?.id,
+        }
       : null,
     expires_date: "",
     payment: "",
@@ -96,9 +95,6 @@ export const Add = ({ onClose, reload }) => {
     total_included_vat: 0,
     total_to_pay: 0,
   });
-
-
-
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -140,27 +136,24 @@ export const Add = ({ onClose, reload }) => {
     }
   };
 
-  const handleCcOnclick= ()=>{
-    setState({showCc: true});
-  }
+  const { control } = useForm({
+    mode: "onChange",
+  });
 
-  const handleBccOnclick= ()=>{
-    setState({showBcc: true});
-  }
+  const handleCcOnclick = () => {
+    setState({ showCc: true });
+  };
 
-  const renderModalHeader = () => (
-    <div>
-      {Lang.get("Add")}
-    </div>
-  );
+  const handleBccOnclick = () => {
+    setState({ showBcc: true });
+  };
 
+  const renderModalHeader = () => <div>{Lang.get("NewMessage")}</div>;
 
   return (
-
     <ErrorBoundary>
       <Popup show size="l" onClose={onClose} header={renderModalHeader()}>
         <Popup.Body>
-
           {state.loading && <Loading />}
           <div className="form-group">
             <div className="col-12 d-flex justify-content-between flex-column flex-md-row p-0">
@@ -184,7 +177,11 @@ export const Add = ({ onClose, reload }) => {
                   </label>
                   <div className="position-relative">
                     <input
-                      className= {!state.showCc || !state.showBcc ? "form-control custom-input-fill w-100" : "form-control custom-input-fillCc w-100" }
+                      className={
+                        !state.showCc && !state.showBcc
+                          ? "form-control custom-input-fill w-100"
+                          : "form-control custom-input-fillCc w-100"
+                      }
                       placeholder={Lang.get("Title")}
                       value={params.title}
                       onChange={(e) =>
@@ -192,40 +189,95 @@ export const Add = ({ onClose, reload }) => {
                       }
                     />
                     <div className="custom-btn-input d-flex justify-content-center  ">
-                      <button onClick={handleCcOnclick} className={!state.showCc ? "show" : "hidden"}>Cc</button>
-                      <button onClick={handleBccOnclick} className={!state.showBcc ? "show" : "hidden"} >Bcc</button>
+                      <button
+                        onClick={handleCcOnclick}
+                        className={!state.showCc && !state.showBcc ? "show" : "hidden"}
+                      >
+                        Cc
+                      </button>
+                      <button
+                        onClick={handleBccOnclick}
+                        className={!state.showCc && !state.showBcc ? "show" : "hidden"}
+                      >
+                        Bcc
+                      </button>
                     </div>
                   </div>
                 </div>
 
-                <div className={state.showCc ? "form-group col-md-12" : "hidden"}>
+                <div
+                  className={state.showCc ? "form-group col-md-12" : "hidden"}
+                >
                   <label className="form-control-label mx-1">
                     {Lang.get("Cc")}
                   </label>
+                  <div className="position-relative">
                   <input
-                    className="form-control  w-100"
+                    className={
+                      !state.showBcc
+                        ? "form-control cc-input-fill w-100"
+                        : "form-control cc-input-full w-100"
+                    }
                     placeholder={Lang.get("Cc")}
                     value={params.select}
                     onChange={(e) =>
                       setParams({ ...params, selecet: e.target.value })
                     }
                   />
+                  <div className="custom-btn-input d-flex justify-content-center  ">
+                      
+                      <button
+                        onClick={handleBccOnclick}
+                        className={!state.showBcc ? "show" : "hidden"}
+                      >
+                        Bcc
+                      </button>
+                    </div>
+                    </div>
                 </div>
 
-                <div className={state.showBcc ? "form-group col-md-12" : "hidden"}>
+                <div
+                  className={state.showBcc ? "form-group col-md-12" : "hidden"}
+                >
                   <label className="form-control-label mx-1">
                     {Lang.get("Bcc")}
                   </label>
+                  <div className="position-relative">
                   <input
-                    className="form-control  w-100"
+                    className={
+                      !state.showCc
+                        ? "form-control bcc-input-fill w-100"
+                        : "form-control bcc-input-full w-100"
+                    }
                     placeholder={Lang.get("Bcc")}
                     value={params.select}
                     onChange={(e) =>
                       setParams({ ...params, selecet: e.target.value })
                     }
                   />
+                  <div className="custom-btn-input d-flex justify-content-center  ">
+                      <button
+                        onClick={handleCcOnclick}
+                        className={!state.showCc && state.showBcc ? "show" : "hidden"}
+                      >
+                        Cc
+                      </button>
+                    </div>
+                    </div>
                 </div>
 
+                <div className="form-group col-12">
+                  <label className="form-control-label">
+                    {Lang.get("Message")}
+                  </label>
+                  <Controller
+                    as={<WYSIWYGEditor defaultValue={params.description} />}
+                    name="editor_content"
+                    control={control}
+                    placeholder="mdfdfffffes"
+                    onChange={(data) => setState({ description: data[0] })}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -244,7 +296,6 @@ export const Add = ({ onClose, reload }) => {
             </button>
           </div>
         </Popup.Footer>
-
       </Popup>
     </ErrorBoundary>
   );
