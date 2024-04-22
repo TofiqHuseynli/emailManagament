@@ -1,0 +1,25 @@
+.custom-btn-input{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    margin-right: 10px;
+
+     button{
+        background-color: transparent;
+        border: none;
+        outline: none;
+        margin:2px ;
+     }
+}
+
+.custom-input-fill{
+    padding-right: 80px;
+}
+.custom-input-fillCc{
+    padding-right: 50px;
+}
+
+.hidden{
+    display: none;
+}

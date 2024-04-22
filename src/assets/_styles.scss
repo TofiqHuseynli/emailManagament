@@ -1,0 +1,99 @@
+.table-title {
+  color: var(--dark);
+}
+
+.form-group {
+  margin-bottom: 1rem !important;
+}
+
+.dm-serif-display {
+  font-family: "DM Serif Display", serif !important;
+}
+
+.poppins {
+  font-family: "Poppins", serif !important;
+}
+
+.input-radius {
+  border-radius: 2rem;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+
+.card-hover {
+  transition: all 0.2s ease;
+  &:hover {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  }
+}
+
+strong {
+  font-weight: bold !important;
+}
+
+.tox-editor-container {
+  z-index: 0;
+}
+
+.wcount-badge {
+  width: fit-content;
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  border-radius: 5rem;
+  padding: 0px 12px 0px 4px;
+  span {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white);
+    opacity: 0.7;
+    font-size: 11px;
+    color: var(--dark);
+  }
+  p {
+    margin: 0 0 0 6px;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+.mr-02 {
+  margin-right: 0.2rem !important;
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+body.dark {
+  .table-title {
+    color: var(--lighter);
+
+    &:hover {
+      color: var(--primary);
+    }
+  }
+}

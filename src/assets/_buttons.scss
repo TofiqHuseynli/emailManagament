@@ -1,0 +1,53 @@
+.btn-outline-warning {
+  border-radius: 4px 0px 4px 4px;
+  border-color: $bg-warning;
+  color: $bg-warning;
+  &:hover {
+    background-color: $bg-warning;
+    border-color: $bg-warning;
+    color: #fff;
+    .btn-outline-warning {
+      border-radius: 4px 0px 4px 4px;
+      border-color: $bg-warning;
+      color: $bg-warning;
+      &:hover {
+        background-color: $bg-warning;
+        border-color: $bg-warning;
+        color: #fff;
+      }
+      &:active {
+        background-color: $bg-warning !important;
+        border-color: $bg-warning !important;
+        color: #fff !important;
+      }
+    }
+
+    .spin {
+      line-height: 0 !important;
+    }
+  }
+  &:active {
+    background-color: $bg-warning !important;
+    border-color: $bg-warning !important;
+    color: #fff !important;
+  }
+}
+
+
+.btn-tab-header{
+  white-space: nowrap;
+  color: #3d3c3c;
+  padding: 1rem 1.5rem;
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  outline: none !important;
+  border: none;
+  cursor: pointer;
+}
+
+body.night .btn-tab-header,
+body.dark .btn-tab-header
+{
+  color: #ced4da;
+}

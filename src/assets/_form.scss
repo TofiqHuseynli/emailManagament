@@ -1,0 +1,14 @@
+.custom-select,
+.form-control:not(.form-control-alternative) {
+  //background-color: $bg-gray !important;
+}
+
+// dark mode
+body.dark {
+  .form-control:not(.form-control-alternative),
+  .custom-select:not(.form-control-alternative) {
+    //background-color: $dark_input !important;
+    color: #e9ecef;
+  }
+}
+

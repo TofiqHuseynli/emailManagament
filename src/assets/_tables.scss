@@ -1,0 +1,237 @@
+$input-bg-3: #f0f2f5;
+$input-color-2: #525f7f;
+$input-bg: #f2f5f9;
+
+.table-customer {
+  display: flex;
+  align-items: center;
+  color: var(--dark);
+  &:hover {
+    color: var(--primary);
+  }
+}
+
+.totals-table-container {
+  table tr {
+    border-bottom: 1px solid $input-bg;
+  }
+}
+
+// items & fines table
+.my-table {
+  width: 100%;
+  .table {
+    .table-head {
+      width: 60rem;
+      white-space: nowrap;
+      border-radius: 0.4rem 0.4rem 0 0;
+      background-color: $input-bg-3;
+      color: $input-color-2;
+      padding: 1rem;
+    }
+
+    .drag-grid {
+      width: 35px;
+      cursor: grab;
+      background: $bg-gray;
+      padding: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      border: 1px solid transparent;
+      &.dragging {
+        border: 1px solid #e27a7a;
+      }
+    }
+    i {
+      background: $bg-gray;
+      padding: 11px;
+      border-radius: 7px;
+      font-size: 18px;
+      margin-top: 1px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      &:hover {
+        background-color: #ebecee;
+      }
+      &:active {
+        background: $bg-gray;
+      }
+    }
+  }
+}
+
+// view table
+.view-table {
+  width: 100%;
+  table {
+    thead {
+      tr {
+        &:first-child {
+          border-bottom: 1px solid var(--dark);
+        }
+        &:last-child {
+          border-bottom: 1px solid $tb-border !important;
+        }
+      }
+    }
+    tbody {
+      border: none;
+      tr {
+        td {
+          border-bottom: 1px solid $tb-border !important;
+        }
+        th {
+          border: none;
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
+/*** DARK MODE ***/
+body.dark {
+  .totals-table-container {
+    table tr {
+      border-bottom: 1px solid var(--dark);
+    }
+  }
+  // items & fines table
+  .my-table {
+    .table {
+      thead {
+        tr {
+          th {
+            background: $dark_input;
+          }
+          .row_title {
+            border-bottom: 1px solid #d3d3d3;
+          }
+        }
+      }
+      .drag-grid {
+        background-color: var(--dark);
+      }
+      i {
+        background-color: var(--dark);
+      }
+    }
+  }
+
+  // view table
+  .view-table {
+    width: 100%;
+    table {
+      thead {
+        tr {
+          &:first-child {
+            border-bottom: 1px solid var(--dark);
+          }
+          &:last-child {
+            border-bottom: 1px solid var(--dark) !important;
+          }
+        }
+      }
+      tbody {
+        border: none;
+        tr {
+          td {
+            border-bottom: 1px solid var(--dark) !important;
+          }
+          th {
+            border: none;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+  .table-customer {
+    display: flex;
+    align-items: center;
+    color: var(--light);
+    &:hover {
+      color: var(--primary);
+    }
+  }
+}
+
+body.night {
+  .totals-table-container {
+    table tr {
+      border-bottom: 1px solid var(--night-dark);
+    }
+  }
+  .view-table {
+    width: 100%;
+    table {
+      thead {
+        tr {
+          &:first-child {
+            border-bottom: 1px solid var(--night-dark);
+          }
+          &:last-child {
+            border-bottom: 1px solid var(--night-dark) !important;
+          }
+        }
+      }
+      tbody {
+        border: none;
+        tr {
+          td {
+            border-bottom: 1px solid var(--night-dark) !important;
+          }
+          th {
+            border: none;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+  // items & fines table
+  .my-table {
+    .table {
+      thead {
+        tr {
+          th {
+            background: var(--night-dark);
+          }
+        }
+      }
+      .drag-grid {
+        background-color: var(--night-dark);
+      }
+      i {
+        background-color: var(--night-dark);
+      }
+    }
+  }
+}
+
+body.dark {
+  // items & fines table
+  .my-table {
+    .table {
+      thead {
+        tr {
+          th {
+            background: var(--dark);
+          }
+        }
+      }
+      tbody {
+        tr {
+          td {
+            i,
+            .drag-grid {
+              background: var(--dark);
+            }
+          }
+        }
+      }
+    }
+  }
+}

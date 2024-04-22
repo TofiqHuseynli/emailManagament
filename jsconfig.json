@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "baseUrl": ".",
+    "noImplicitAny": false,
+    "paths": {
+      // common
+      "@hooks": ["./src/hooks"],
+      "@config": ["./src/config"],
+      "@actions": ["./src/actions"],
+      "@plugins": ["./src/plugins"],
+      "@layouts": ["./src/layouts"],
+      "@components": ["./src/components"]
+    }
+  }
+}
