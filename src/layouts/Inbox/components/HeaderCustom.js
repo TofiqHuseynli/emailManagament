@@ -55,12 +55,12 @@ export const HeaderCustom = ({
                 </span>
               </div>
               <InputLazy
-                value={state.title}
+                value={state.recipient}
                 onChange={(e) => {
-                  setState({ title: e.target.value });
+                  setState({ recipient: e.target.value });
                   historyPushByName(
                     {
-                      label: "title",
+                      label: "recipient",
                       value: e.target.value,
                     },
                     name

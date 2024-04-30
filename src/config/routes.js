@@ -23,7 +23,7 @@ export const API_ROUTES = {
  //
  taxRatesList: INVOICE_API_URL + "/taxrates/list",
 
- // Offers
+ // Mails
  mailsList: MICROSERVICE_URL + "/mails/list",
  mailsAdd: MICROSERVICE_URL + "/mails/addmail",
  mailsDelete: MICROSERVICE_URL + "/mails/delete",

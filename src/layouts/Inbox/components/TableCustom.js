@@ -31,12 +31,7 @@ export const TableCustom = ({
     {
       name: Lang.get("Subject"),
       center: false,
-      render: (data) => (
-        <div>
-          <i className="feather feather-user mr-1" />
-          {data.subject}
-        </div>
-      ),
+      key:'subject'
     },
     {
       name: Lang.get("Date"),

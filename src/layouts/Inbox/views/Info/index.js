@@ -15,7 +15,7 @@ import {
 } from "@actions";
  
 
-export const Add = ({ onClose, reload }) => {
+export const Info = ({ onClose, reload, data: { id } }) => {
   const toast = useToast();
 
   const [state, setState] = React.useReducer(

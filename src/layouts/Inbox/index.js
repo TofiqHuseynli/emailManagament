@@ -48,6 +48,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
         JSON.parse(localStorage.getItem(`${VIEW}_columns_${config.appID}`)) ||
         [],
       paramsList: [],
+      recipient: '',
       listStatus: [],
       showFilter: false,
       filters: {
@@ -84,11 +85,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
             }
           : null,
       },
-      totalItems: [],
-      total: 0,
-      successPercent: 0,
-      errorPercent: 0,
-      progressVisible: false,
+    
     }
   );
 
