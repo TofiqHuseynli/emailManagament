@@ -3,18 +3,13 @@ import React from "react";
 import { App, AppContext, ErrorBoundary, Lang, useToast, Actions } from "fogito-core-ui";
 import {
   getFilterToLocal,
-  historyPushByName,
   onFilterStorageBySection,
   changeListStatus,
-  offersList,
-  offersParams,
-  offersDelete,
+  mailsList,
 } from "@actions";
 import moment from "moment";
 
 import {
-  CardList,
-  Filters,
   HeaderCustom,
   TableCustom,
   ViewRoutes,
@@ -99,7 +94,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
 
   const loadData = async (params) => {
     setState({ loading: true, skip: params?.skip || 0 });
-    let response = await offersList({
+    let response = await mailsList({
       limit: state.limit || "",
       skip: params?.skip || 0,
       sort: "created_at",
@@ -123,40 +118,40 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
       setState({ loading: false, progressVisible: false });
       if (response.status === "success") {
         setState({ data: response.data, count: response.count });
-        loadListStatus();
+      
       } else {
         setState({ data: [], count: 0 });
       }
     }
   };
 
-  const loadListStatus = async () => {
-    setState({ setLoadingList: true });
-    let response = await changeListStatus({
-      status: state.filters.status?.value || "",
-      user_id: state.filters.user?.value || "",
-      start_date: state.filters.range.start_date
-        ? moment(`${state.filters.range.start_date} 00:00:00`).unix()
-        : "",
-      end_date: state.filters.range.end_date
-        ? moment(`${state.filters.range.end_date} 23:59:59`).unix()
-        : "",
-      owner_id: state.filters.owner?.value || "",
-    });
-    setState({ setLoadingList: false });
-    if (response.status === "success") {
-      setState({ listStatus: response.data });
-    } else {
-      setState({ listStatus: null });
-    }
-  };
+  // const loadListStatus = async () => {
+  //   setState({ setLoadingList: true });
+  //   let response = await changeListStatus({
+  //     status: state.filters.status?.value || "",
+  //     user_id: state.filters.user?.value || "",
+  //     start_date: state.filters.range.start_date
+  //       ? moment(`${state.filters.range.start_date} 00:00:00`).unix()
+  //       : "",
+  //     end_date: state.filters.range.end_date
+  //       ? moment(`${state.filters.range.end_date} 23:59:59`).unix()
+  //       : "",
+  //     owner_id: state.filters.owner?.value || "",
+  //   });
+  //   setState({ setLoadingList: false });
+  //   if (response.status === "success") {
+  //     setState({ listStatus: response.data });
+  //   } else {
+  //     setState({ listStatus: null });
+  //   }
+  // };
 
-  const loadParamsList = async () => {
-    let response = await offersParams();
-    if (response.status === "success") {
-      setState({ paramsList: response });
-    }
-  };
+  // const loadParamsList = async () => {
+  //   let response = await offersParams();
+  //   if (response.status === "success") {
+  //     setState({ paramsList: response });
+  //   }
+  // };
 
   const onDelete = (ids) =>
     toast
@@ -219,83 +214,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
         }
       });
 
-  const onAction = (target) => {
-    historyPushByName(
-      {
-        label: "activecard",
-        value: target,
-      },
-      name
-    );
-    switch (target) {
-      case "total":
-        setState({
-          filters: { ...state.filters, status: null, activeCard: "total" },
-        });
-        historyPushByName(
-          {
-            label: "status",
-            value: "",
-          },
-          name
-        );
-        break;
-      case "accepted":
-        setState({
-          filters: {
-            ...state.filters,
-            status: { value: 2, label: "Accepted" },
-            activeCard: "accepted",
-          },
-        });
-        historyPushByName(
-          {
-            label: "status",
-            value: "2",
-          },
-          name
-        );
-        break;
-      case "waiting":
-        setState({
-          filters: {
-            ...state.filters,
-            status: { value: 3, label: "Waiting" },
-            activeCard: "waiting",
-          },
-        });
-        historyPushByName(
-          {
-            label: "status",
-            value: "3",
-          },
-          name
-        );
-        break;
-      case "canceled":
-        setState({
-          filters: {
-            ...state.filters,
-            status: { value: 4, label: "Canceled" },
-            activeCard: "canceled",
-          },
-        });
-        historyPushByName(
-          {
-            label: "status",
-            value: "4",
-          },
-          name
-        );
-        break;
-      default:
-        setState({
-          filters: { ...state.filters, status: null, activeCard: "total" },
-        });
-        break;
-    }
-  };
-
+  
   const onClearFilters = () => {
     setState({
       filters: {
@@ -327,9 +246,9 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
     loadData();
   }, [state.limit, state.filters]);
 
-  React.useEffect(() => {
-    loadParamsList();
-  }, []);
+  // React.useEffect(() => {
+  //   loadParamsList();
+  // }, []);
 
   React.useEffect(() => {
     setProps({ activeRoute: { name, path } });

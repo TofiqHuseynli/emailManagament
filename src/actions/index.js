@@ -1,10 +1,7 @@
-export * from "./terms-conditions";
-export * from "./noteschanges";
-export * from "./offers-users";
-export * from "./functions";
+ export * from "./functions";
 export * from "./invoice";
 export * from "./common";
-export * from "./offers";
+export * from "./inbox";
 export * from "./branch";
 export * from "./users";
 export * from "./activities";
