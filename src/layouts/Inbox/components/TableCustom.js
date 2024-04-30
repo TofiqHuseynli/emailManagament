@@ -32,7 +32,7 @@ export const TableCustom = ({ state, setState, path, loadData, VIEW, onDelete })
         >
           <div className="text-primary-alternative">
             <i className="feather feather-user mr-1" />
-            {data.from?.fullname}
+            Salam Hello
           </div>
         </FrameLink>
       ),
@@ -49,7 +49,7 @@ export const TableCustom = ({ state, setState, path, loadData, VIEW, onDelete })
         >
           <div className="text-primary-alternative">
             <i className="feather feather-user mr-1" />
-            {data.recipient?.fullname}
+            Hikmet Balayev
           </div>
         </FrameLink>
       ),
@@ -66,7 +66,7 @@ export const TableCustom = ({ state, setState, path, loadData, VIEW, onDelete })
         >
           <div className="text-primary-alternative">
             <i className="feather feather-user mr-1" />
-            {data.subject?.fullname}
+            Test subject
           </div>
         </FrameLink>
       ),
@@ -78,44 +78,40 @@ export const TableCustom = ({ state, setState, path, loadData, VIEW, onDelete })
       width: 150,
       render: (data) => <SimpleDate date={data.created_at} />,
     },
-       { 
+    {
       name: Lang.get("Actions"),
+      width: 10,
       center: true,
-      width: 60,
-      render: (data) => (
-          <div className="d-flex">
-            {data.permissions.can_edit && (
-              <Tooltip title={Lang.get("Edit")}>
-                <Link
-                  className="btn btn-outline-warning btn-sm h-auto lh-10 p-1 mb-2 mb-lg-0 mr-0 mx-1"
-                  to={`${path}/edit/${data?.id}`}
-                >
-                  <i className="feather feather-edit-2" />
-                </Link>
-              </Tooltip>
-            )}
-            {data?.permissions?.can_resend && (
-              <Tooltip title={Lang.get("Resend")}>
-                <button
-                  className="btn btn-outline-primary btn-sm h-auto lh-10 p-1 mb-2 mb-lg-0 mr-0 mx-1"
-                  onClick={() => onResend(data.id)}
-                >
-                  <i className="feather feather-send" />
-                </button>
-              </Tooltip>
-            )}
-            {data.permissions.can_delete && (
-              <Tooltip title={Lang.get("Delete")}>
-                <button
-                  className="btn btn-outline-danger btn-sm h-auto lh-10 p-1 mb-2 mb-lg-0 mr-0 mx-1"
-                  onClick={() => onDelete([data.id])}
-                >
-                  <i className="feather feather-x" />
-                </button>
-              </Tooltip>
-            )}
+      render: (data) => {
+        return (
+          <div className='dropleft'>
+            <button
+              data-toggle='dropdown'
+              className='btn shadow-none bg-transparent feather feather-more-vertical p-0'
+              style={{ fontSize: "1.2rem", height: "22px", lineHeight: "1px" }}
+            />
+            <div className='dropdown-menu'>
+              <button
+                className='dropdown-item'
+               >
+                {Lang.get( "SetDefault")}
+              </button>
+              <button
+                className='dropdown-item'
+             
+              >
+                {Lang.get("Edit")}
+              </button>
+              <button
+                className='dropdown-item text-danger'
+                onClick={() => onDelete([data.id])}
+              >
+                {Lang.get("Delete")}
+              </button>
+            </div>
           </div>
-      ),
+        );
+      },
     },
   ];
 

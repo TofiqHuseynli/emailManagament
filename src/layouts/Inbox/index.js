@@ -375,8 +375,8 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
         VIEW={VIEW}
         filters={filters}
       />
-      {/* <section className="container-fluid">
-        <CardList state={state} onAction={onAction} />
+      <section className="container-fluid">
+        {/* <CardList state={state} onAction={onAction} /> */}
 
         <TableCustom
           state={state}
@@ -386,7 +386,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
           VIEW={VIEW}
           onDelete={onDelete}
         />
-      </section> */}
+      </section>
     </ErrorBoundary>
   );
 };
