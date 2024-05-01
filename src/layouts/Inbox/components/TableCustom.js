@@ -15,7 +15,9 @@ export const TableCustom = ({
   VIEW,
   onDelete,
 }) => {
-  const toast = useToast();
+  const showInfo =()=>{
+    setState({info: false})
+}
 
   const columns = [
     {
@@ -53,8 +55,8 @@ export const TableCustom = ({
               style={{ fontSize: "1.2rem", height: "22px", lineHeight: "1px" }}
             />
             <div className="dropdown-menu">
-              <button className="dropdown-item">
-                {Lang.get("SetDefault")}
+              <button onClick={showInfo} className="dropdown-item">
+                {Lang.get("Info")}
               </button>
               <button className="dropdown-item">{Lang.get("Edit")}</button>
               <button

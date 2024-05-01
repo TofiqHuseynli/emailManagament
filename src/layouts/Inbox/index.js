@@ -1,6 +1,13 @@
 import React from "react";
 
-import { App, AppContext, ErrorBoundary, Lang, useToast, Actions } from "fogito-core-ui";
+import {
+  App,
+  AppContext,
+  ErrorBoundary,
+  Lang,
+  useToast,
+  Actions,
+} from "fogito-core-ui";
 import {
   getFilterToLocal,
   onFilterStorageBySection,
@@ -9,11 +16,7 @@ import {
 } from "@actions";
 import moment from "moment";
 
-import {
-  HeaderCustom,
-  TableCustom,
-  ViewRoutes,
-} from "./components";
+import { HeaderCustom, Info, TableCustom, ViewRoutes } from "./components";
 import { config } from "@config";
 
 export const Inbox = ({ name, history, match: { path, url } }) => {
@@ -44,12 +47,16 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
       count: 0,
       limit: localStorage.getItem(`${VIEW}_tb_limit`) || "10",
       skip: 0,
+      info: JSON.parse(localStorage.getItem(`${VIEW}_columns_${config.appID}`)) ||
+      true,
       hiddenColumns:
         JSON.parse(localStorage.getItem(`${VIEW}_columns_${config.appID}`)) ||
         [],
       paramsList: [],
-      recipient: '',
+      recipient: getFilterToLocal(name, "recipient") || null,
+
       listStatus: [],
+
       showFilter: false,
       filters: {
         activeCard: getFilterToLocal(name, "activecard") || "total",
@@ -85,7 +92,6 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
             }
           : null,
       },
-    
     }
   );
 
@@ -95,6 +101,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
       limit: state.limit || "",
       skip: params?.skip || 0,
       sort: "created_at",
+      recipient: state.recipient || "",
       owner_id: state.filters.owner?.value || "",
       branch: state.filters.branch?.value || "",
       start_date: state.filters.range.start_date
@@ -115,7 +122,6 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
       setState({ loading: false, progressVisible: false });
       if (response.status === "success") {
         setState({ data: response.data, count: response.count });
-      
       } else {
         setState({ data: [], count: 0 });
       }
@@ -191,7 +197,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
               limit: state.limit,
               skip: state.skip,
               dataLength: state.data?.length,
-              url:"offersDelete",
+              url: "offersDelete",
               reload: (skip) => loadData({ skip }),
               getData: ({
                 total,
@@ -211,9 +217,9 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
         }
       });
 
-  
   const onClearFilters = () => {
     setState({
+      recipient: null,
       filters: {
         activeCard: "total",
         status: null,
@@ -227,9 +233,9 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
     onFilterStorageBySection(name);
   };
 
-  const onClose =()=>{
-    history.push(url)
-  }
+  const onClose = () => {
+    history.push(url);
+  };
 
   const goBack = () => {
     if (typeof onClose === "function") {
@@ -241,7 +247,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
 
   React.useEffect(() => {
     loadData();
-  }, [state.limit, state.filters]);
+  }, [state.recipient, state.limit, state.filters]);
 
   // React.useEffect(() => {
   //   loadParamsList();
@@ -256,6 +262,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
 
   const filters = {
     ...state.filters,
+    recipient: state.recipient === "" ? null : state.recipient,
     activeCard: null,
     range:
       state.filters.range?.start_date === null &&
@@ -264,7 +271,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
         : state.filters.range,
   };
 
-  return (
+  return state.info ? (
     <ErrorBoundary>
       {/* <Filters
         show={state.showFilter}
@@ -275,11 +282,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
         setState={(key, value) => setState({ [key]: value })}
       /> */}
 
-      <ViewRoutes
-        onClose={goBack}
-        loadData={loadData}
-        path={path}
-      />
+      <ViewRoutes onClose={goBack} loadData={loadData} path={path} />
 
       <HeaderCustom
         state={state}
@@ -292,8 +295,6 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
         filters={filters}
       />
       <section className="container-fluid">
-        {/* <CardList state={state} onAction={onAction} /> */}
-
         <TableCustom
           state={state}
           setState={setState}
@@ -303,6 +304,15 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
           onDelete={onDelete}
         />
       </section>
+    </ErrorBoundary>
+  ) : (
+    <ErrorBoundary>
+      
+      <Info
+      state={state}
+      setState={setState}
+      />
+     
     </ErrorBoundary>
   );
 };

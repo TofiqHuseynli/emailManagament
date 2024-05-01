@@ -12,7 +12,7 @@ export const HeaderCustom = ({
   onClearFilters,
   VIEW,
   filters,
-  name
+  name,
 }) => {
   const columns = [
     { name: Lang.get("From") },
@@ -66,7 +66,6 @@ export const HeaderCustom = ({
                     name
                   );
                 }}
-                action={() => { }}
                 className="form-control form-control-alternative"
                 placeholder={Lang.get("Recipient")}
               />
