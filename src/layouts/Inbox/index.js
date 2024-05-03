@@ -13,6 +13,7 @@ import {
   onFilterStorageBySection,
   changeListStatus,
   mailsList,
+  mailsDelete,
 } from "@actions";
 import moment from "moment";
 
@@ -176,7 +177,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
           if (state.selectedIDs?.length === 1) {
             setState({ setLoading: true });
             let response = null;
-            response = await offersDelete({ data: { id: ids[0] } });
+            response = await mailsDelete({ data: { id: ids[0] } });
             if (response) {
               setState({ loading: false, selectedIDs: [] });
               toast.fire({
@@ -197,7 +198,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
               limit: state.limit,
               skip: state.skip,
               dataLength: state.data?.length,
-              url: "offersDelete",
+              url: "mailsDelete",
               reload: (skip) => loadData({ skip }),
               getData: ({
                 total,
@@ -241,7 +242,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
     if (typeof onClose === "function") {
       onClose();
     } else {
-      history.push("/offers");
+      history.push("/mails");
     }
   };
 
