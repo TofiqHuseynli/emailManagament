@@ -271,7 +271,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
         : state.filters.range,
   };
 
-  return state.info ? (
+  return !state.info ? (
     <ErrorBoundary>
       {/* <Filters
         show={state.showFilter}
