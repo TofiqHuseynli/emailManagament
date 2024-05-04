@@ -56,14 +56,14 @@ export const TableCustom = ({
               style={{ fontSize: "1.2rem", height: "22px", lineHeight: "1px" }}
             />
             <div className="dropdown-menu">
-            <Tooltip title={Lang.get("Info")}>
-                <Link
-                  className="btn btn-outline-warning btn-sm h-auto lh-10 p-1 mb-2 mb-lg-0 mr-0 mx-1"
+            <button className="dropdown-item">
+            <Link
+                  className="text-dark"
                   to={`${path}/info/${data?.id}`}
                 >
-                  <i className="feather feather-edit-2" />
+                   {Lang.get("Info")}
                 </Link>
-              </Tooltip>
+            </button>
               <button className="dropdown-item">{Lang.get("Edit")}</button>
               <button
                 className="dropdown-item text-danger"

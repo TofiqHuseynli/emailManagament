@@ -4,10 +4,22 @@ import {
   Popup,
  
 } from "fogito-core-ui";
+import {useParams} from "react-router-dom";
 
 
-export const Info = ({ onClose}) => {
+export const Info = ({ onClose, reload, match}) => {
+  let urlParams = useParams();
  
+  const [state, setState] = React.useReducer(
+    (prevState, newState) => ({ ...prevState, ...newState }),
+    {
+      id: urlParams?.id,
+      loading: true,
+      saveLoading: false,
+     
+     
+    }
+  );
 
   return (
     <ErrorBoundary>
