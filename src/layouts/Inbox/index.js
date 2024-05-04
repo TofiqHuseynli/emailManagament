@@ -11,8 +11,8 @@ import {
 import {
   getFilterToLocal,
   onFilterStorageBySection,
-  changeListStatus,
   mailsList,
+  mailsDelete,
 } from "@actions";
 import moment from "moment";
 
@@ -22,8 +22,6 @@ import { config } from "@config";
 export const Inbox = ({ name, history, match: { path, url } }) => {
   const toast = useToast();
   const VIEW = "inbox";
-  const OWNER = App.get("OWNER");
-  const USER = App.get("USER");
   const dateFilters = [
     {
       label: Lang.get("bySentDate"),
@@ -47,16 +45,12 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
       count: 0,
       limit: localStorage.getItem(`${VIEW}_tb_limit`) || "10",
       skip: 0,
-      info: JSON.parse(localStorage.getItem(`${VIEW}_columns_${config.appID}`)) ||
-      true,
+      info: true,
       hiddenColumns:
         JSON.parse(localStorage.getItem(`${VIEW}_columns_${config.appID}`)) ||
         [],
       paramsList: [],
       recipient: getFilterToLocal(name, "recipient") || null,
-
-      listStatus: [],
-
       showFilter: false,
       filters: {
         activeCard: getFilterToLocal(name, "activecard") || "total",
@@ -72,25 +66,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
                 .format("YYYY-MM-DD")
             : null,
         },
-        owner: OWNER
-          ? { value: OWNER.id, label: OWNER.fullname }
-          : getFilterToLocal(name, "owner")
-          ? { value: getFilterToLocal(name, "owner"), label: "" }
-          : null,
-        user: USER
-          ? { value: USER.id, label: USER.fullname }
-          : getFilterToLocal(name, "user")
-          ? { value: getFilterToLocal(name, "user"), label: "" }
-          : null,
-        branch: getFilterToLocal(name, "branch")
-          ? { value: getFilterToLocal(name, "branch"), label: "" }
-          : null,
-        status: getFilterToLocal(name, "status")
-          ? {
-              label: "",
-              value: Number(getFilterToLocal(name, "status")),
-            }
-          : null,
+      
       },
     }
   );
@@ -102,20 +78,9 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
       skip: params?.skip || 0,
       sort: "created_at",
       recipient: state.recipient || "",
-      owner_id: state.filters.owner?.value || "",
-      branch: state.filters.branch?.value || "",
       start_date: state.filters.range.start_date
         ? moment(`${state.filters.range.start_date} 00:00:00`).unix()
         : "",
-      end_date: state.filters.range.end_date
-        ? moment(`${state.filters.range.end_date} 23:59:59`).unix()
-        : "",
-      user_id: state.filters.user?.value || "",
-      is_template: 0,
-      status:
-        state.filters.status?.value === 0
-          ? "0"
-          : state.filters.status?.value || "",
       ...params,
     });
     if (response) {
@@ -127,34 +92,6 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
       }
     }
   };
-
-  // const loadListStatus = async () => {
-  //   setState({ setLoadingList: true });
-  //   let response = await changeListStatus({
-  //     status: state.filters.status?.value || "",
-  //     user_id: state.filters.user?.value || "",
-  //     start_date: state.filters.range.start_date
-  //       ? moment(`${state.filters.range.start_date} 00:00:00`).unix()
-  //       : "",
-  //     end_date: state.filters.range.end_date
-  //       ? moment(`${state.filters.range.end_date} 23:59:59`).unix()
-  //       : "",
-  //     owner_id: state.filters.owner?.value || "",
-  //   });
-  //   setState({ setLoadingList: false });
-  //   if (response.status === "success") {
-  //     setState({ listStatus: response.data });
-  //   } else {
-  //     setState({ listStatus: null });
-  //   }
-  // };
-
-  // const loadParamsList = async () => {
-  //   let response = await offersParams();
-  //   if (response.status === "success") {
-  //     setState({ paramsList: response });
-  //   }
-  // };
 
   const onDelete = (ids) =>
     toast
@@ -176,7 +113,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
           if (state.selectedIDs?.length === 1) {
             setState({ setLoading: true });
             let response = null;
-            response = await offersDelete({ data: { id: ids[0] } });
+            response = await mailsDelete({ data: { id: ids[0] } });
             if (response) {
               setState({ loading: false, selectedIDs: [] });
               toast.fire({
@@ -197,7 +134,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
               limit: state.limit,
               skip: state.skip,
               dataLength: state.data?.length,
-              url: "offersDelete",
+              url: "mailsDelete",
               reload: (skip) => loadData({ skip }),
               getData: ({
                 total,
@@ -249,10 +186,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
     loadData();
   }, [state.recipient, state.limit, state.filters]);
 
-  // React.useEffect(() => {
-  //   loadParamsList();
-  // }, []);
-
+ 
   React.useEffect(() => {
     setProps({ activeRoute: { name, path } });
     return () => {
@@ -271,7 +205,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
         : state.filters.range,
   };
 
-  return !state.info ? (
+  return state.info ? (
     <ErrorBoundary>
       {/* <Filters
         show={state.showFilter}

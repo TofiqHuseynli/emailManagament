@@ -1,7 +1,7 @@
 import React from "react";
 import { ErrorBoundary } from "fogito-core-ui";
 import { Route } from "react-router-dom";
-import { Add, Edit } from "../views";
+import { Add, Edit, Info } from "../views";
 
 export const ViewRoutes = ({ onClose, loadData, path }) => {
   return (
@@ -12,12 +12,12 @@ export const ViewRoutes = ({ onClose, loadData, path }) => {
           <Add {...routeProps} reload={() => loadData()} onClose={onClose} />
         )}
       />
-      {/* <Route
-        path={`${path}/edit/:id`}
+      <Route
+        path={`${path}/info/:id`}
         render={(routeProps) => (
-          <Edit {...routeProps} reload={() => loadData()} onClose={onClose} />
+          <Info {...routeProps} reload={() => loadData()} onClose={onClose} />
         )}
-      /> */}
+      />
     </ErrorBoundary>
   );
 };

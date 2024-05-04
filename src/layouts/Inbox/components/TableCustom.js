@@ -4,8 +4,9 @@ import {
   Lang,
   Table,
   SimpleDate,
-  useToast,
 } from "fogito-core-ui";
+import { Link } from "react-router-dom";
+import Tooltip from "antd/lib/tooltip";
  
 export const TableCustom = ({
   state,
@@ -55,9 +56,14 @@ export const TableCustom = ({
               style={{ fontSize: "1.2rem", height: "22px", lineHeight: "1px" }}
             />
             <div className="dropdown-menu">
-              <button onClick={showInfo} className="dropdown-item">
-                {Lang.get("Info")}
-              </button>
+            <Tooltip title={Lang.get("Info")}>
+                <Link
+                  className="btn btn-outline-warning btn-sm h-auto lh-10 p-1 mb-2 mb-lg-0 mr-0 mx-1"
+                  to={`${path}/info/${data?.id}`}
+                >
+                  <i className="feather feather-edit-2" />
+                </Link>
+              </Tooltip>
               <button className="dropdown-item">{Lang.get("Edit")}</button>
               <button
                 className="dropdown-item text-danger"
