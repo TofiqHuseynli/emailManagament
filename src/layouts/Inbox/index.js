@@ -178,7 +178,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
     if (typeof onClose === "function") {
       onClose();
     } else {
-      history.push("/offers");
+      history.push("/mails");
     }
   };
 
