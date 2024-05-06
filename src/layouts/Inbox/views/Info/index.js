@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ErrorBoundary,
   Popup,
  
 } from "fogito-core-ui";
 import {useParams} from "react-router-dom";
+import { mailsList } from "@actions";
 
 
 export const Info = ({ onClose, reload, match}) => {
@@ -15,11 +16,27 @@ export const Info = ({ onClose, reload, match}) => {
     {
       id: urlParams?.id,
       loading: true,
-      saveLoading: false,
-     
+      skip:0,
+      subject:"",
      
     }
   );
+
+  const loadData = async (params)=>{
+    setState({ loading: true, skip: params?.skip || 0 });
+    let response = await mailsList({id: state.id});
+    if(response.status == "success"){
+      setState({
+          loading: false,
+          subject: response.data?.subject,
+         
+        });
+  };
+};
+
+  useEffect(()=>{
+    loadData();
+  })
 
   return (
     <ErrorBoundary>
@@ -30,7 +47,7 @@ export const Info = ({ onClose, reload, match}) => {
         <Popup.Footer>
           <div className="d-flex">
           <div className="p-3 m-3 bg-white rounded d-flex ">
-                <h3 className="mr-1">Subject:</h3><p>Test lorem ipsum</p>
+                <h3 className="mr-1">Subject:</h3><p>{state.subject}</p>
             </div>
 
             <div className="p-5 m-3 bg-white rounded  ">
