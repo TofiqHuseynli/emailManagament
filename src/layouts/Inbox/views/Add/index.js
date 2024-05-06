@@ -9,15 +9,11 @@ import {
 import { Spinner, WYSIWYGEditor } from "@components";
 import { useForm, Controller } from "react-hook-form";
 import {
-
   mailsAdd,
-
 } from "@actions";
  
-
 export const Add = ({ onClose, reload }) => {
   const toast = useToast();
-
   const [state, setState] = React.useReducer(
     (prevState, newState) => ({ ...prevState, ...newState }),
     {
@@ -31,8 +27,6 @@ export const Add = ({ onClose, reload }) => {
       message: '',
     }
   );
-
-
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -78,9 +72,7 @@ export const Add = ({ onClose, reload }) => {
   const handleBccOnclick = () => {
     setState({ showBcc: true });
   };
-
   const renderModalHeader = () => <div>{Lang.get("NewMessage")}</div>;
-
   return (
     <ErrorBoundary>
       <Popup show size="l" onClose={onClose} header={renderModalHeader()}>
@@ -166,7 +158,6 @@ export const Add = ({ onClose, reload }) => {
                     </div>
                   </div>
                 </div>
-
                 <div
                   className={state.showBcc ? "form-group col-md-12" : "hidden"}
                 >
@@ -196,7 +187,6 @@ export const Add = ({ onClose, reload }) => {
                     </div>
                   </div>
                 </div>
-
                 <div className="form-group col-12">
                   <label className="form-control-label">
                     {Lang.get("Message")}

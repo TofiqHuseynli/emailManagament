@@ -6,7 +6,6 @@ import {
   SimpleDate,
 } from "fogito-core-ui";
 import { Link } from "react-router-dom";
-import Tooltip from "antd/lib/tooltip";
  
 export const TableCustom = ({
   state,
@@ -77,7 +76,6 @@ export const TableCustom = ({
       },
     },
   ];
-
   const onSelect = (id) => {
     if (state.selectedIDs.includes(id)) {
       setState({

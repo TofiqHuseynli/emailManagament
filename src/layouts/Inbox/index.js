@@ -1,7 +1,5 @@
 import React from "react";
-
 import {
-  App,
   AppContext,
   ErrorBoundary,
   Lang,
@@ -16,22 +14,12 @@ import {
 } from "@actions";
 import moment from "moment";
 
-import { HeaderCustom, Info, TableCustom, ViewRoutes } from "./components";
+import { Filters, HeaderCustom, Info, TableCustom, ViewRoutes } from "./components";
 import { config } from "@config";
 
 export const Inbox = ({ name, history, match: { path, url } }) => {
   const toast = useToast();
   const VIEW = "inbox";
-  const dateFilters = [
-    {
-      label: Lang.get("bySentDate"),
-      value: "sent_at",
-    },
-    {
-      label: Lang.get("byExpirationDate"),
-      value: "expiration_at",
-    },
-  ];
 
   const { setProps } = React.useContext(AppContext);
 
@@ -53,20 +41,19 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
       recipient: getFilterToLocal(name, "recipient") || null,
       showFilter: false,
       filters: {
-        activeCard: getFilterToLocal(name, "activecard") || "total",
+        subject: "",
         range: {
           start_date: getFilterToLocal(name, "date")
             ? moment
-                .unix(getFilterToLocal(name, "date")?.split("T")[0] || "")
-                .format("YYYY-MM-DD")
+              .unix(getFilterToLocal(name, "date")?.split("T")[0] || "")
+              .format("YYYY-MM-DD")
             : null,
           end_date: getFilterToLocal(name, "date")
             ? moment
-                .unix(getFilterToLocal(name, "date")?.split("T")[1] || "")
-                .format("YYYY-MM-DD")
+              .unix(getFilterToLocal(name, "date")?.split("T")[1] || "")
+              .format("YYYY-MM-DD")
             : null,
         },
-      
       },
     }
   );
@@ -78,6 +65,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
       skip: params?.skip || 0,
       sort: "created_at",
       recipient: state.recipient || "",
+      subject: state.filters.subject,
       start_date: state.filters.range.start_date
         ? moment(`${state.filters.range.start_date} 00:00:00`).unix()
         : "",
@@ -158,12 +146,7 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
     setState({
       recipient: null,
       filters: {
-        activeCard: "total",
-        status: null,
-        user: null,
-        owner: null,
-        branch: null,
-        receiver: null,
+        subject: "",
         range: { start_date: null, end_date: null },
       },
     });
@@ -186,7 +169,6 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
     loadData();
   }, [state.recipient, state.limit, state.filters]);
 
- 
   React.useEffect(() => {
     setProps({ activeRoute: { name, path } });
     return () => {
@@ -195,26 +177,25 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
   }, []);
 
   const filters = {
-    ...state.filters,
     recipient: state.recipient === "" ? null : state.recipient,
-    activeCard: null,
+    subject: state.filters.subject === "" ? null : state.filters.subject,
     range:
       state.filters.range?.start_date === null &&
-      state.filters.range?.end_date === null
+        state.filters.range?.end_date === null
         ? null
         : state.filters.range,
   };
 
   return state.info ? (
     <ErrorBoundary>
-      {/* <Filters
+      <Filters
         show={state.showFilter}
         name={name}
         paramsList={state.paramsList}
-        dateFilters={dateFilters}
         filters={state.filters}
+        state={state}
         setState={(key, value) => setState({ [key]: value })}
-      /> */}
+      />
 
       <ViewRoutes onClose={goBack} loadData={loadData} path={path} />
 
@@ -241,12 +222,12 @@ export const Inbox = ({ name, history, match: { path, url } }) => {
     </ErrorBoundary>
   ) : (
     <ErrorBoundary>
-      
+
       <Info
-      state={state}
-      setState={setState}
+        state={state}
+        setState={setState}
       />
-     
+
     </ErrorBoundary>
   );
 };

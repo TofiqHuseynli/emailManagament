@@ -1,7 +1,7 @@
 import React from "react";
 import { ErrorBoundary } from "fogito-core-ui";
 import { Route } from "react-router-dom";
-import { Add, Edit, Info } from "../views";
+import { Add, Info } from "../views";
 
 export const ViewRoutes = ({ onClose, loadData, path }) => {
   return (

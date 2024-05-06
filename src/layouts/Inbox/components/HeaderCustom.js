@@ -46,7 +46,6 @@ export const HeaderCustom = ({
               </button>
             </div>
           )}
-
           <div className="col-md-4 col-12 mt-md-0 mt-3 order-md-2 order-3">
             <div className="input-group input-group-alternative d-flex align-items-center">
               <div className="input-group-prepend">
@@ -71,7 +70,6 @@ export const HeaderCustom = ({
               />
             </div>
           </div>
-
           <div className="col-md-auto col-6 mt-md-0 mt-3 ml-md-auto order-md-2 order-3">
             <Table.ColumnFilter
               className="btn btn-block btn-white"
